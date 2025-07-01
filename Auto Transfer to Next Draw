@@ -1,0 +1,16 @@
+function autoShiftToNextDraw() {
+  const today = new Date();
+  if (today.getDate() === 28 && today.getHours() === 15 && today.getMinutes() === 0) {
+    const eligibleCoupons = getCouponsByStatus("active", currentMonth());
+
+    performDraw(eligibleCoupons); // Monthly Draw
+
+    const pendingCoupons = getCouponsByStatus("pending");
+    pendingCoupons.forEach(coupon => {
+      // Check still within 60-day range
+      if (isWithin60Days(coupon.issueDate)) {
+        coupon.drawMonth = nextMonth();
+      }
+    });
+  }
+}
