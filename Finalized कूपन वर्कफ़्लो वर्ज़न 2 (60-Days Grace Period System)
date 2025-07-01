@@ -1,0 +1,34 @@
+function processCoupon(coupon) {
+  const now = new Date();
+  const drawCutoff = new Date(now.getFullYear(), now.getMonth(), 28, 15, 0, 0); // 28th 3:00PM
+  const issueDate = new Date(coupon.issueDate);
+  const expiryDate = new Date(issueDate);
+  expiryDate.setDate(expiryDate.getDate() + 60);
+
+  // कूपन अल्रेडी एक्टिव है
+  if (coupon.status === "active") return;
+
+  // पेंडिंग है
+  if (now <= expiryDate) {
+    // वॉलेट में पैसा आ गया है
+    if (coupon.walletBalance >= coupon.amount) {
+      coupon.status = "active";
+
+      // एक्टिवेशन ड्रॉ कैलकुलेशन
+      if (now < drawCutoff) {
+        coupon.drawMonth = currentMonth();
+      } else {
+        coupon.drawMonth = nextMonth();
+      }
+
+      notifyTarget("Coupon activated and added to draw.");
+    } else {
+      // वेटिंग - do nothing
+      coupon.status = "pending";
+    }
+  } else {
+    // एक्सपायर कर दो
+    coupon.status = "expired";
+    notifyTarget("Coupon expired after 60 days.");
+  }
+}
