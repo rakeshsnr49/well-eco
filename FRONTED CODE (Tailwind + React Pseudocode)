@@ -1,0 +1,29 @@
+import { useState } from "react";
+
+export default function CouponStatus({ walletBalance, requiredAmount }) {
+  const [status, setStatus] = useState("processing");
+
+  const checkBalance = () => {
+    if (walletBalance >= requiredAmount) {
+      setStatus("active");
+    } else {
+      setStatus("pending");
+    }
+  };
+
+  return (
+    <div className="p-4 rounded-xl shadow-md max-w-md mx-auto mt-10">
+      <h1 className="text-xl font-bold mb-4">Coupon Status</h1>
+      <button onClick={checkBalance} className="bg-blue-600 text-white px-4 py-2 rounded">
+        Generate Coupon
+      </button>
+
+      {status === "active" && <p className="text-green-600 mt-4">✅ Coupon Activated!</p>}
+      {status === "pending" && (
+        <div className="mt-4 text-yellow-600">
+          ⏳ Coupon Pending due to insufficient balance. Target must recharge wallet within 24 hours.
+        </div>
+      )}
+    </div>
+  );
+}
