@@ -1,0 +1,14 @@
+getElementById('couponNoticePopup').style.display='none'">Close</button>
+</div><script>
+// Example function to show the popup on QR scan simulation
+function showCouponNoticePopup() {
+  document.getElementById('couponNoticePopup').style.display = 'block';
+}
+// Uncomment this to trigger on page load or QR scan event
+// window.onload = showCouponNoticePopup;
+</script><!-- 2. OTP / SMS Message Template (for integration into backend SMS API) --><!--
+  SMS Body Template:
+  "Your OTP is 123456. No Extra Charge for the Coupon – This Coupon is 100% Free to Customer. Report misuse: +91-1234567890"
+--><!-- 3. App / Website Terms & Conditions Section --><section id="terms" style="margin-top: 30px;">
+  <h2>Terms & Conditions</h2>
+  <p style="font-size: 16px; color: #444;">
